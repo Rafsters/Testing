@@ -165,7 +165,7 @@ public class BoardPanel extends JPanel implements Serializable{
     }
     
     public BoardPanel process(){
-		return new BoardPanel("001112233445566778899");
+		return new BoardPanel("99887766554433221100");
     }
 
 }
