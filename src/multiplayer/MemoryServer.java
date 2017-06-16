@@ -19,6 +19,7 @@ public class MemoryServer extends JFrame {
     private boolean uruchomiony = false;
     private Vector<Polaczenie> klienci = new Vector<Polaczenie>();
     public static String kolejnoscKart;
+    private BoardPanel b = new BoardPanel("00112233445566778899");
 
     public MemoryServer() {
         super("Memory Server");
@@ -134,6 +135,15 @@ public class MemoryServer extends JFrame {
         public void run() {
             try {
                 wyjscie = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
+                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+                		oos.flush();
+                		ObjectInputStream ois = new ObjectInputStream(
+                		socket.getInputStream());
+                		b = (BoardPanel) ois.readObject();
+                		BoardPanel odp = b.process();
+                		oos.writeObject(odp);
+                		ois.close();
+                		oos.close();
                 wyswietlKomunikat("Gracz dołączył do gry.\n");
                 for (Polaczenie klient : klienci) {
                     klient.wyjscie.println(kolejnoscKart);
